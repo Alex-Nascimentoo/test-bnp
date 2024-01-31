@@ -10,8 +10,11 @@
 import styles from '@/styles/context-api.module.css';
 import { IToastMessage } from '@/types/toast-message';
 import { ToastMessage } from '@/components/ToastMessage';
+import { useToastMessage } from '@/contexts/toastMessage';
 
 export default function ContextApi() {
+	const { status, showMessage } = useToastMessage();
+
 	const messages: Array<IToastMessage> = [
 		{
 			id: '1',
@@ -26,11 +29,13 @@ export default function ContextApi() {
 	];
 
 	function handleSuccessButtonClick() {
-		alert('Method: handleSuccessButtonClick not implemented');
+		// alert('Method: handleSuccessButtonClick not implemented');
+		showMessage('success');
 	}
 
 	function handleErrorButtonClick() {
-		alert('Method: handleErrorButtonClick not implemented');
+		// alert('Method: handleErrorButtonClick not implemented');
+		showMessage('error');
 	}
 
 	return (
@@ -45,9 +50,16 @@ export default function ContextApi() {
 			</div>
 
 			<div className={styles['toast-container']}>
-				{messages.map((message) => (
+				{
+					status !== '' &&
+						<ToastMessage
+						content={messages.filter(m => m.type === status)[0]}
+						/>
+				}
+				
+				{/* {messages.map((message) => (
 					<ToastMessage key={message.id} content={message} />
-				))}
+				))} */}
 			</div>
 		</>
 	);

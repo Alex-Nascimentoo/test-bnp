@@ -6,6 +6,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	position: relative;
 }
 
 .container [data-close] {
@@ -25,4 +26,30 @@
 	background-color: #f8d7da;
 	border-color: #f5c6cb;
 	color: #721c24;
+}
+
+@keyframes toastMessageTimeout {
+	0% { width: 0%; }
+	100% { width: 100%; }
+}
+
+#loadbar {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+
+	height: 3px;
+	width: 100%;
+
+	animation-name: toastMessageTimeout;
+	animation-duration: 3s;
+	animation-timing-function: linear;
+}
+
+.bgSuccess {
+	background-color: #155724;
+}
+
+.bgError {
+	background-color: #721c24;
 }
