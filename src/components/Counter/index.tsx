@@ -1,22 +1,24 @@
 import { useState, useEffect } from 'react';
 
+import { executeEvent } from '@/pages/ciclo-de-vida';
+
 type CounterProps = {
 	initialCount: number;
 };
 
 export const Counter: React.FC<CounterProps> = ({ initialCount }) => {
-	const [count, setCount] = useState(initialCount);
+	const [count, setCount] = useState<number>(initialCount);
 
 	useEffect(() => {
-		console.log('Componente montado!');
+		executeEvent("onCounterMount", count);
 
 		return () => {
-			console.log('Componente desmontado!');
+			executeEvent("onCounterUnmount", count);
 		};
 	}, []);
 
 	useEffect(() => {
-		console.log('Componente atualizado!');
+		executeEvent("onCounterUpdate", count);
 	});
 
 	const handleIncrement = () => {

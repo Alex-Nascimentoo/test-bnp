@@ -25,9 +25,13 @@ type CicloDeVidaProps = {
 	initialCount: number;
 };
 
+export function executeEvent(eventName: string, data: number) {
+	const event = new CustomEvent<number>(eventName, { detail: data });
+	window.dispatchEvent(event);
+}
+
 export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 	const [showCounter, setShowCounter] = useState(false);
-	const [count, setCount] = useState(0);
 
 	function handleOcultCounterClick() {
 		setShowCounter((prevState) => !prevState);
@@ -41,9 +45,13 @@ export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 		window.addEventListener('onCounterUnmount', (event: CustomEventInit) => {
 			console.log('onCounterUnmount');
 		});
+	});
 
+	useEffect(() => {
 		window.addEventListener('onCounterUpdate', (event: CustomEventInit) => {
-			console.log('onCounterUpdate');
+			console.log(`onComponentUpdate ${event.detail}`);
+
+			event.detail === 10 && setShowCounter(false);
 		});
 	}, []);
 
