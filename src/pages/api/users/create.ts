@@ -12,7 +12,7 @@
 
 import { NextApiRequest, NextApiResponse } from 'next/types';
 
-import { IUser, TUserCreate } from '@/types/user.d';
+import { IUser } from '@/types/user.d';
 import { createUser } from '@/db/users';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -21,8 +21,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		return res.status(405).json({ ok: false, message: 'Method not allowed', ptMessage: 'Método não permitido' });
 	}
 
+	// Get user data from the request body
 	const { name, email } = req.body;
 
+	// Create new user and store it to a variable
 	const newUser: IUser = createUser({
 		name,
 		email

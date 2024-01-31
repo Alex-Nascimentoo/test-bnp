@@ -1,5 +1,6 @@
 import { IUser, TUserCreate } from "@/types/user";
 
+// Sample database
 let usersList: IUser[] = [
   {
     id: 1,
@@ -18,10 +19,12 @@ let usersList: IUser[] = [
   }
 ];
 
+// Get all users
 export function getUsers(): IUser[] {
   return usersList;
 }
 
+// Create new user based on user data and retrieve final user information
 export function createUser(user: TUserCreate): IUser {
   const lastId: number = usersList[usersList.length - 1].id;
   

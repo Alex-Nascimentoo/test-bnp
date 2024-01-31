@@ -25,6 +25,7 @@ type CicloDeVidaProps = {
 	initialCount: number;
 };
 
+// Run custom events on other components
 export function executeEvent(eventName: string, data: number) {
 	const event = new CustomEvent<number>(eventName, { detail: data });
 	window.dispatchEvent(event);
@@ -37,6 +38,7 @@ export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 		setShowCounter((prevState) => !prevState);
 	}
 
+	// Create custom event listeners when mounting component
 	useEffect(() => {
 		window.addEventListener('onCounterMount', (event: CustomEventInit) => {
 			console.log('onCounterMount');
@@ -47,10 +49,12 @@ export default function CicloDeVida({ initialCount }: CicloDeVidaProps) {
 		});
 	});
 
+	// Create and run event listener on component update
 	useEffect(() => {
 		window.addEventListener('onCounterUpdate', (event: CustomEventInit) => {
 			console.log(`onComponentUpdate ${event.detail}`);
 
+			// Unmount component if counter value is equal to 10
 			event.detail === 10 && setShowCounter(false);
 		});
 	}, []);

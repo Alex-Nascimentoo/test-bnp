@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
 				<title>Teste Front-End - BNP</title>
 			</Head>
 
+			{/* All providers are wrapped inside the AppProvider */}
 			<AppProvider>
 				<Component {...pageProps} />
 			</AppProvider>

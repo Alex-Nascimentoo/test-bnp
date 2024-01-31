@@ -18,6 +18,7 @@ type TErrorMessageProps = {
 	message: string | undefined;
 }
 
+// Error message in case user input is invalid
 function ErrorMessage({ message }: TErrorMessageProps) {
 	return (
 		<p>{message}</p>
@@ -27,6 +28,7 @@ function ErrorMessage({ message }: TErrorMessageProps) {
 export default function Form() {
 	const { register, handleSubmit, formState: {errors} } = useForm<TUserCreate>();
 
+	// Actual submit routine
 	const onSubmit: SubmitHandler<TUserCreate> = data => {
 		fetch('/api/users/create', {
 			method: 'POST',
@@ -44,9 +46,13 @@ export default function Form() {
 					<input {...register("name")} type="text" placeholder="Name" required />
 					<input
 						{...register("email", {
+							// Message in case user submit with empty input
 							required: "Um email é necessário",
 							pattern: {
+								// Validate email
 								value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+								
+								// Message in case email is invalid
 								message: "Por favor, insira um email válido"
 							}
 						})}
@@ -54,6 +60,7 @@ export default function Form() {
 						placeholder="E-mail"
 					/>
 
+					{/* Show error message if email is invalid */}
 					{errors?.email && <ErrorMessage message={errors?.email.message} />}
 
 					<button type="submit" data-type="confirm">

@@ -37,6 +37,8 @@ export default function Lista() {
 				<h2>Lista de usuários</h2>
 
 				<div data-list-container>
+
+					{/* Map through all users and display their info */}
 					{ users.map((u, index) => (
 						<div data-list-item key={index}>
 							ID {u.id} - {u.name} ({u.email})

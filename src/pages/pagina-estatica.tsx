@@ -17,6 +17,7 @@ type TListaProps = {
 	data: ICity[];
 }
 
+// Get data during componentMount stage
 export const getStaticProps = (async () => {
 	let props: TListaProps = {} as TListaProps;
 
@@ -45,10 +46,13 @@ export default function Lista({ data }: InferGetStaticPropsType<typeof getStatic
 	]);
 
 	useEffect(() => {
+
+		// Refresh page every 60 seconds
 		const intervalId = setInterval(() => {
 			setList(data);
-		}, 6000);
+		}, 60000);
 
+		// Clear de interval so it can run again
 		return () => clearInterval(intervalId);
 	}, []);
 

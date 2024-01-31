@@ -13,6 +13,7 @@ import { ToastMessage } from '@/components/ToastMessage';
 import { useToastMessage } from '@/contexts/toastMessage';
 
 export default function ContextApi() {
+	// Import status and function to show toast messages
 	const { status, showMessage } = useToastMessage();
 
 	const messages: Array<IToastMessage> = [
@@ -29,12 +30,10 @@ export default function ContextApi() {
 	];
 
 	function handleSuccessButtonClick() {
-		// alert('Method: handleSuccessButtonClick not implemented');
 		showMessage('success');
 	}
 
 	function handleErrorButtonClick() {
-		// alert('Method: handleErrorButtonClick not implemented');
 		showMessage('error');
 	}
 
@@ -51,15 +50,13 @@ export default function ContextApi() {
 
 			<div className={styles['toast-container']}>
 				{
+					// If status is different from '' (success or error), show toast message
 					status !== '' &&
 						<ToastMessage
-						content={messages.filter(m => m.type === status)[0]}
+							// Get message info according to status
+							content={messages.filter(m => m.type === status)[0]}
 						/>
 				}
-				
-				{/* {messages.map((message) => (
-					<ToastMessage key={message.id} content={message} />
-				))} */}
 			</div>
 		</>
 	);

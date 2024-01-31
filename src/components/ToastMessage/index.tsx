@@ -10,6 +10,8 @@ type ToastMessageProps = {
 };
 
 export const ToastMessage: React.FC<ToastMessageProps> = ({ content: data }) => {
+	
+	// Import function to show toast message
 	const { showMessage } = useToastMessage();
 
 	return (
@@ -18,6 +20,7 @@ export const ToastMessage: React.FC<ToastMessageProps> = ({ content: data }) => 
 
 			<span data-close onClick={() => showMessage('')}>╳</span>
 
+			{/* Div for bottom loading bar */}
 			<div id={styles.loadbar} className={data.type === 'success' ? styles.bgSuccess : styles.bgError}></div>
 		</div>
 	);

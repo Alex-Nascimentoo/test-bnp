@@ -23,6 +23,8 @@ export default function Home() {
 
 	function renderModalContent() {
 		return (
+
+			// Use stopPropagation function not to click parent elements
 			<div data-modal-content className={styles['modal-form']} onClick={e => e.stopPropagation()}>
 				<form onSubmit={() => false}>
 					<div>
