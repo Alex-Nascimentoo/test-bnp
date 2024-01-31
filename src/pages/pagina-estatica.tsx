@@ -8,33 +8,48 @@
  */
 
 import { useEffect, useState } from 'react';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 
 import styles from '@/styles/lista.module.css';
 import { ICity } from '@/types/city.d';
 
-export default function Lista() {
-	const [list, setUsers] = useState<Array<ICity>>([
+type TListaProps = {
+	data: ICity[];
+}
+
+export const getStaticProps = (async () => {
+	let props: TListaProps = {} as TListaProps;
+
+	try {
+		const response = await fetch('http://localhost:8080/api/cities/10');
+		const data: ICity[] = await response.json();
+
+		if (!response.ok) throw new Error('Erro ao obter os dados');
+
+		props = { data }
+	} catch (error) {
+		console.error(error);
+	}
+
+	return {
+		props
+	}
+}) satisfies GetStaticProps<{ data: ICity[]}>
+
+export default function Lista({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
+	const [list, setList] = useState<Array<ICity>>([
 		{
 			id: new Date().getTime().toString(),
 			name: 'São Paulo',
 		},
 	]);
 
-	async function getList() {
-		try {
-			const response = await fetch('/api/cities/10');
-			const data = await response.json();
-
-			if (!response.ok) throw new Error('Erro ao obter os dados');
-
-			setUsers(data);
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
 	useEffect(() => {
-		getList();
+		const intervalId = setInterval(() => {
+			setList(data);
+		}, 6000);
+
+		return () => clearInterval(intervalId);
 	}, []);
 
 	return (
