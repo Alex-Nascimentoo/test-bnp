@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		return res.status(405).json({ ok: false, message: 'Method not allowed', ptMessage: 'Método não permitido' });
 	}
 
-	const { name, email }: TUserCreate = req.body;
+	const { name, email } = req.body;
 
 	const newUser: IUser = createUser({
 		name,
