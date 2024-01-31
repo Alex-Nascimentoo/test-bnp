@@ -16,6 +16,21 @@ import { Modal } from '@/components/Modal';
 
 export default function Home() {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
+	
+	// Could receive content from props or URL or import custom function
+	function renderModalContent() {
+		return (
+			<div data-modal-content onClick={e => e.stopPropagation()}>
+				<h2>This is the modal content</h2>
+				<p>P.S: I hope you're having a nice day ;)</p>
+			</div>
+		);
+	}
+
+	function handleModalConfirm() {
+		alert('This is the confirmation function');
+		setModalIsOpen(false);
+	}
 
 	return (
 		<>
@@ -26,6 +41,15 @@ export default function Home() {
 			</main>
 
 			{/* Renderizar modal de confirmação */}
+			<Modal
+				isOpen={modalIsOpen}
+				title='Confirmação'
+				onClose={() => setModalIsOpen(false)}
+				onConfirm={handleModalConfirm}
+				footer={{ confirmText: 'Confirm' }}
+			>
+				{ renderModalContent() }
+			</Modal>
 		</>
 	);
 }
