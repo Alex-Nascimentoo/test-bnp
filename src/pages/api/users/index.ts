@@ -13,10 +13,10 @@
 import { NextApiRequest, NextApiResponse } from 'next/types';
 
 import { IUser } from '@/types/user.d';
-import usersList from '@/db/users';
+import { getUsers } from '@/db/users';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-	const users: Array<IUser> = usersList;
+	const users: Array<IUser> = getUsers();
 
 	if (req.method !== 'GET') {
 		return res.status(405).json({ ok: false, message: 'Method not allowed', ptMessage: 'Método não permitido' });

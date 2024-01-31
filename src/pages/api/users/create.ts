@@ -12,10 +12,21 @@
 
 import { NextApiRequest, NextApiResponse } from 'next/types';
 
-import { IUser, IUserCreate } from '@/types/user.d';
+import { IUser, TUserCreate } from '@/types/user.d';
+import { createUser } from '@/db/users';
 
-const users: IUser[] = [];
+export default async (req: NextApiRequest, res: NextApiResponse) => {
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-	return res.status(400).json(undefined);
+	if (req.method !== 'POST') {
+		return res.status(405).json({ ok: false, message: 'Method not allowed', ptMessage: 'Método não permitido' });
+	}
+
+	const { name, email }: TUserCreate = req.body;
+
+	const newUser: IUser = createUser({
+		name,
+		email
+	})
+
+	return res.status(201).json(newUser);
 };
